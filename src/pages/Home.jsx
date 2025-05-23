@@ -1,9 +1,42 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useContext } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../App'
 import MainFeature from '../components/MainFeature'
 import ApperIcon from '../components/ApperIcon'
+import { motion } from 'framer-motion'
+import MainFeature from '../components/MainFeature'
+  const { logout } = useContext(AuthContext)
+  const navigate = useNavigate()
+  const { user, isAuthenticated } = useSelector(state => state.user)
 
-const Home = () => {
+  if (!isAuthenticated) {
+    navigate('/login')
+    return null
+  }
+
+import ApperIcon from '../components/ApperIcon'
+
+      <header className="bg-white/70 dark:bg-surface-800/70 backdrop-blur-lg shadow-sm px-4 py-4 fixed top-0 left-0 right-0 z-10">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="text-xl font-bold text-primary-600">TaskFlow</div>
+          <div className="flex items-center space-x-4">
+            <div className="text-sm text-surface-600 dark:text-surface-300">
+              Hello, {user?.firstName || 'User'}
+            </div>
+            <button 
+              onClick={logout}
+              className="flex items-center space-x-1 text-sm text-surface-600 dark:text-surface-300 hover:text-primary-600 dark:hover:text-primary-400"
+            >
+              <ApperIcon name="LogOut" className="w-4 h-4" />
+              <span>Logout</span>
+            </button>
+          </div>
+        </div>
+      </header>
+      <div className="pt-16">
+        <MainFeature />
+      </div>
   const [isDarkMode, setIsDarkMode] = useState(false)
 
   const toggleDarkMode = () => {
